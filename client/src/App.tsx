@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import WeaverPage from "./pages/WeaverPage";
 import AccountType from "./pages/AccountType";
+import RegisterUser from "./pages/RegisterUser";
 
 function App() {
     return (
@@ -8,6 +9,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<WeaverPage />} />
                 <Route path="/account-type" element={<AccountType />} />
+                <Route path="/register-user" element={<RegisterUser />} />
                 {/* <Route path="/signup" element={<Signup />} />
                 <Route path="/connect" element={<ConnectWallet />} />
                 <Route path="/howitworks" element={<HowItWorks />} />
