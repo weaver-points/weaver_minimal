@@ -11,6 +11,8 @@ export interface InputBoxProps {
     label: string;
     inputType: string;
     placeholder?: string;
+    classStyle?: string;
+    size?: number;
 }
 
 export interface IconBoxProps {
