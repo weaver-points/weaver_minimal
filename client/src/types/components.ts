@@ -42,3 +42,17 @@ export interface CampaignCardProps {
     onClick?: () => void;
     otherBg?: string;
 }
+
+export interface CampaignBannerProps {
+    otherBg?: string;
+    title: string;
+    icon: string;
+    owner: string;
+    shareLink: string;
+    telegramLink: string;
+    xLink: string;
+}
+
+export interface JoinBannerProps {
+    date: string;
+}

@@ -5,6 +5,7 @@ import RegisterUser from "./pages/RegisterUser";
 import RegisterProtocol from "./pages/RegisterProtocol";
 import DashboardLayout from "./pages/dashboard/DashboardLayout";
 import Dashboard from "./pages/dashboard/Dashboard";
+import CampaignDetails from "./pages/dashboard/CampaignDetails";
 
 function App() {
     return (
@@ -20,6 +21,10 @@ function App() {
 
                 <Route path="/dashboard" element={<DashboardLayout />}>
                     <Route index element={<Dashboard />} />
+                    <Route
+                        path="campaign-details"
+                        element={<CampaignDetails />}
+                    />
                 </Route>
             </Routes>
         </Router>
