@@ -6,6 +6,8 @@ import RegisterProtocol from "./pages/RegisterProtocol";
 import DashboardLayout from "./pages/dashboard/DashboardLayout";
 import Dashboard from "./pages/dashboard/Dashboard";
 import CampaignDetails from "./pages/dashboard/CampaignDetails";
+import CampaignProfile from "./pages/dashboard/CampaignProfile";
+// import CampaignProfile from "./pages/dashboard/";
 
 function App() {
     return (
@@ -24,6 +26,10 @@ function App() {
                     <Route
                         path="campaign-details"
                         element={<CampaignDetails />}
+                    />
+                    <Route
+                        path="campaign-profile"
+                        element={<CampaignProfile />}
                     />
                 </Route>
             </Routes>
