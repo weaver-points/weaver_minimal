@@ -3,6 +3,8 @@ import WeaverPage from "./pages/WeaverPage";
 import AccountType from "./pages/AccountType";
 import RegisterUser from "./pages/RegisterUser";
 import RegisterProtocol from "./pages/RegisterProtocol";
+import DashboardLayout from "./pages/dashboard/DashboardLayout";
+import Dashboard from "./pages/dashboard/Dashboard";
 
 function App() {
     return (
@@ -15,18 +17,10 @@ function App() {
                     path="/register-protocol"
                     element={<RegisterProtocol />}
                 />
-                {/* <Route path="/signup" element={<Signup />} />
-                <Route path="/connect" element={<ConnectWallet />} />
-                <Route path="/howitworks" element={<HowItWorks />} />
-                <Route path="/getdigester" element={<GetDigester />} />
+
                 <Route path="/dashboard" element={<DashboardLayout />}>
                     <Route index element={<Dashboard />} />
-                    <Route path="marketplace" element={<Marketplace />} />
-                    <Route path="energy-asset" element={<EnergyAsset />} />
-                    <Route path="admin" element={<Admin />} />
-                    <Route path="rewards" element={<Rewards />} />
-                    <Route path="gas" element={<Gas />} />
-                </Route> */}
+                </Route>
             </Routes>
         </Router>
     );

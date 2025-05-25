@@ -22,3 +22,23 @@ export interface IconBoxProps {
     className?: string;
     onClick?: () => void;
 }
+
+export interface Campaign {
+    id: string;
+    title: string;
+    startDate: string;
+    endDate: string;
+    owner: string;
+    activeCount: number;
+    icon: string;
+}
+
+export interface CampaignsProps {
+    campaigns: Campaign[];
+}
+
+export interface CampaignCardProps {
+    campaign: Campaign;
+    onClick?: () => void;
+    otherBg?: string;
+}

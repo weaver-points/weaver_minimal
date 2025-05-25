@@ -14,3 +14,17 @@ body {
         "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
         "Helvetica Neue", sans-serif;
 }
+
+.nft-pattern {
+    background-image: url("./assets/nft-guy.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.dao-pattern {
+    background-image: url("./assets/dao-guy.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
