@@ -23,7 +23,10 @@ const RegisterProtocolForm = () => {
                     <IconBox icon={github} text="Github" />
                 </div>
             </div>
-            <button className="block mx-auto w-[80%] bg-[#E0FFB0] text-black py-4 rounded-lg">
+            <button
+                className="block mx-auto w-[80%] bg-[#E0FFB0] text-black py-4 rounded-lg"
+                onClick={() => (window.location.href = "/dashboard")}
+            >
                 Register
             </button>
         </div>

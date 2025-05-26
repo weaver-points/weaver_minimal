@@ -5,6 +5,8 @@ export interface AccountTypeOptionsProps {
     alt?: string;
     className?: string;
     onClick?: () => void;
+
+    link: string; // New property for the link
 }
 
 export interface InputBoxProps {

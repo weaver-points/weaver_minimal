@@ -14,11 +14,13 @@ const AccountType = () => {
                         image={userIconWithBG}
                         heading="User"
                         body="Join campaigns, earn rewards and view campaign progress in real time."
+                        link="/register-user"
                     />
                     <AccountTypeOptions
                         image={protocolIconWithBG}
                         heading="Protocol"
                         body="Create campaigns, build loyalty, and give out rewards to users."
+                        link="/register-protocol"
                     />
                 </div>
             </div>
