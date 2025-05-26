@@ -3,7 +3,10 @@ import type { CampaignCardProps } from "../../types";
 
 const CampaignCard = ({ campaign, otherBg }: CampaignCardProps) => {
     return (
-        <div className="w-full border rounded flex flex-col">
+        <div
+            className="w-full border rounded flex flex-col"
+            onClick={() => (location.href = `/dashboard/campaign-details`)}
+        >
             <div
                 className={
                     !otherBg
