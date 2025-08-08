@@ -1,14 +1,14 @@
 import type { CampaignsProps } from "../../types";
 import CampaignCard from "./CampaignCard";
 
-const Campaigns = ({ campaigns }: CampaignsProps) => {
+const Campaigns: React.FC<CampaignsProps> = ({ campaigns }) => {
     return (
-        <div className="w-full grid grid-cols-2 gap-6 mt-8">
-            {campaigns.map((campaign) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 animate-fade-in">
+            {campaigns.map((campaign, index) => (
                 <CampaignCard
                     key={campaign.id}
                     campaign={campaign}
-                    otherBg={Number(campaign.id) % 2 == 0 ? "dao-pattern" : ""}
+                    otherBg={index % 2 === 0 ? "dao-pattern" : ""}
                 />
             ))}
         </div>

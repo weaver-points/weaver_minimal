@@ -1,6 +1,8 @@
 import Campaigns from "../../components/dashboard/Campaigns";
 import coitonLogo from "../../assets/coiton-logo.png";
-const activeCampaigns = [
+import type { Campaign } from "../../types";
+
+const activeCampaigns: Campaign[] = [
     {
         id: "1",
         title: "Early NFT Collector",
@@ -9,6 +11,8 @@ const activeCampaigns = [
         owner: "Coiton",
         activeCount: 14,
         icon: coitonLogo,
+        status: "active",
+        category: "NFT",
     },
     {
         id: "2",
@@ -18,6 +22,8 @@ const activeCampaigns = [
         owner: "Layer3",
         activeCount: 987,
         icon: coitonLogo,
+        status: "active",
+        category: "DAO",
     },
     {
         id: "3",
@@ -27,6 +33,8 @@ const activeCampaigns = [
         owner: "Coiton",
         activeCount: 14,
         icon: coitonLogo,
+        status: "active",
+        category: "Testing",
     },
     {
         id: "4",
@@ -36,6 +44,8 @@ const activeCampaigns = [
         owner: "Layer3",
         activeCount: 987,
         icon: coitonLogo,
+        status: "active",
+        category: "DAO",
     },
     {
         id: "5",
@@ -45,6 +55,8 @@ const activeCampaigns = [
         owner: "Coiton",
         activeCount: 14,
         icon: coitonLogo,
+        status: "active",
+        category: "NFT",
     },
     {
         id: "6",
@@ -54,14 +66,34 @@ const activeCampaigns = [
         owner: "Coiton",
         activeCount: 987,
         icon: coitonLogo,
+        status: "active",
+        category: "NFT",
     },
 ];
+
 const Dashboard = () => {
     return (
-        <div className="p-12 bg-black">
-            <h1 className="text-[#EBFFCB] text-[40px]">Campaigns</h1>
-            <h3 className="text-2xl mt-12">Trending campaigns</h3>
-            <Campaigns campaigns={activeCampaigns} />
+        <div className="space-y-8 animate-fade-in">
+            <div className="space-y-4">
+                <h1 className="text-dark-600 text-3xl md:text-4xl lg:text-5xl font-bold">
+                    Campaigns
+                </h1>
+                <p className="text-dark-400 text-lg">
+                    Discover and join exciting campaigns to earn rewards
+                </p>
+            </div>
+
+            <div className="space-y-6">
+                <div className="flex items-center justify-between">
+                    <h2 className="text-white text-xl md:text-2xl font-semibold">
+                        Trending campaigns
+                    </h2>
+                    <button className="text-dark-500 hover:text-dark-600 transition-colors text-sm font-medium">
+                        View all
+                    </button>
+                </div>
+                <Campaigns campaigns={activeCampaigns} />
+            </div>
         </div>
     );
 };

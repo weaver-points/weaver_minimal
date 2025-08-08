@@ -1,15 +1,23 @@
 import InputBox from "./ui/InputBox";
 import line from "../assets/svg/line.svg";
 import discord from "../assets/svg/discord.svg";
-
 import twitter from "../assets/svg/twitter.svg";
 import github from "../assets/svg/github.svg";
 import IconBox from "./ui/IconBox";
+
 const RegisterProtocolForm = () => {
     return (
         <div className="flex flex-col space-y-8 pl-4 pt-8">
-            <InputBox label="Protocol Name" inputType="text" />
-            <InputBox label="Protocol Overview" inputType="text" />
+            <InputBox 
+                label="Protocol Name" 
+                inputType="text" 
+                placeholder="Enter your protocol name"
+            />
+            <InputBox 
+                label="Protocol Overview" 
+                inputType="text" 
+                placeholder="Describe your protocol"
+            />
             <div className="flex space-x-2">
                 <img src={line} alt="line" />
                 <p>OR</p>
