@@ -5,10 +5,15 @@ import telegram from "../assets/svg/telegram.svg";
 import twitter from "../assets/svg/twitter.svg";
 import github from "../assets/svg/github.svg";
 import IconBox from "./ui/IconBox";
+
 const RegisterUserForm = () => {
     return (
         <div className="flex flex-col space-y-8 pl-4 pt-8">
-            <InputBox label="Username" inputType="text" />
+            <InputBox
+                label="Username"
+                inputType="text"
+                placeholder="Enter your username"
+            />
             <InputBox
                 label="Email Address"
                 inputType="email"
