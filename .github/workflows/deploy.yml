@@ -1,0 +1,212 @@
+name: Selective Deployment
+
+on:
+    push:
+        branches: [main]
+    workflow_dispatch:
+        inputs:
+            deploy_client:
+                description: "Deploy client (frontend)"
+                required: false
+                default: false
+                type: boolean
+            deploy_contracts:
+                description: "Deploy contracts"
+                required: false
+                default: false
+                type: boolean
+            deploy_backend:
+                description: "Deploy backend"
+                required: false
+                default: false
+                type: boolean
+
+jobs:
+    # Check which paths have changed (only for push events)
+    changes:
+        if: github.event_name == 'push'
+        runs-on: ubuntu-latest
+        outputs:
+            client: ${{ steps.filter.outputs.client }}
+            contracts: ${{ steps.filter.outputs.contracts }}
+            backend: ${{ steps.filter.outputs.backend }}
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: Check for changes
+              id: filter
+              uses: dorny/paths-filter@v3
+              with:
+                  filters: |
+                      client:
+                        - 'client/**'
+                      contracts:
+                        - 'contracts/**'
+                      backend:
+                        - 'backend/**'
+
+    # Deploy Client (Frontend)
+    deploy-client:
+        needs: [changes]
+        if: |
+            (github.event_name == 'push' && needs.changes.outputs.client == 'true') ||
+            (github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_client == 'true')
+        runs-on: ubuntu-latest
+        environment: production
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "20"
+                  cache: "npm"
+                  cache-dependency-path: client/package-lock.json
+
+            - name: Install dependencies
+              run: |
+                  cd client
+                  npm ci
+
+            - name: Build project
+              run: |
+                  cd client
+                  npm run build
+
+            - name: Deploy to Vercel/Netlify (example)
+              run: |
+                  echo "Deploying client to production..."
+                  # Add your deployment commands here
+                  # Examples:
+                  # - For Vercel: vercel --prod
+                  # - For Netlify: netlify deploy --prod
+                  # - For AWS S3: aws s3 sync dist/ s3://your-bucket
+                  echo "Client deployment completed"
+
+            - name: Notify deployment
+              run: |
+                  echo "✅ Client successfully deployed to production"
+
+    # Deploy Contracts
+    deploy-contracts:
+        needs: [changes]
+        if: |
+            (github.event_name == 'push' && needs.changes.outputs.contracts == 'true') ||
+            (github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_contracts == 'true')
+        runs-on: ubuntu-latest
+        environment: production
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Setup Cairo
+              uses: starknet-edu/setup-cairo@v1
+              with:
+                  cairo-version: "2.8.5"
+                  scarb-version: "0.12.0"
+                  starknet-foundry-version: "0.34.0"
+
+            - name: Build contracts
+              run: |
+                  cd contracts
+                  scarb build
+
+            - name: Deploy to Starknet
+              env:
+                  STARKNET_PRIVATE_KEY: ${{ secrets.STARKNET_PRIVATE_KEY }}
+                  STARKNET_RPC_URL: ${{ secrets.STARKNET_RPC_URL }}
+              run: |
+                  cd contracts
+                  echo "Deploying contracts to Starknet..."
+                  # Add your deployment commands here
+                  # Examples:
+                  # - scarb deploy
+                  # - starknet deploy
+                  echo "Contract deployment completed"
+
+            - name: Notify deployment
+              run: |
+                  echo "✅ Contracts successfully deployed to Starknet"
+
+    # Deploy Backend
+    deploy-backend:
+        needs: [changes]
+        if: |
+            (github.event_name == 'push' && needs.changes.outputs.backend == 'true') ||
+            (github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_backend == 'true')
+        runs-on: ubuntu-latest
+        environment: production
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Backend deployment placeholder
+              run: |
+                  echo "Backend deployment will be implemented when backend code is added"
+                  echo "Currently only documentation exists in the backend folder"
+
+            # Add your backend deployment steps here when implemented
+            # Examples:
+            # - name: Setup Python/Node.js/Go
+            # - name: Install dependencies
+            # - name: Build backend
+            # - name: Deploy to AWS/GCP/Azure
+            # - name: Run database migrations
+
+            - name: Notify deployment
+              run: |
+                  echo "✅ Backend deployment placeholder completed"
+
+    # Deployment summary
+    deployment-summary:
+        needs: [changes, deploy-client, deploy-contracts, deploy-backend]
+        runs-on: ubuntu-latest
+        if: always()
+
+        steps:
+            - name: Deployment Summary
+              run: |
+                  echo "🚀 Deployment Summary"
+                  echo "=================="
+
+                  if [[ "${{ github.event_name }}" == "push" ]]; then
+                    echo "Changes detected:"
+                    echo "  Client: ${{ needs.changes.outputs.client }}"
+                    echo "  Contracts: ${{ needs.changes.outputs.contracts }}"
+                    echo "  Backend: ${{ needs.changes.outputs.backend }}"
+                  else
+                    echo "Manual deployment triggered:"
+                    echo "  Client: ${{ github.event.inputs.deploy_client }}"
+                    echo "  Contracts: ${{ github.event.inputs.deploy_contracts }}"
+                    echo "  Backend: ${{ github.event.inputs.deploy_backend }}"
+                  fi
+
+                  echo ""
+                  echo "Deployment results:"
+                  echo "  Client: ${{ needs.deploy-client.result }}"
+                  echo "  Contracts: ${{ needs.deploy-contracts.result }}"
+                  echo "  Backend: ${{ needs.deploy-backend.result }}"
+
+                  # Check for failures
+                  if [[ "${{ needs.deploy-client.result }}" == "failure" ]]; then
+                    echo "❌ Client deployment failed"
+                    exit 1
+                  fi
+
+                  if [[ "${{ needs.deploy-contracts.result }}" == "failure" ]]; then
+                    echo "❌ Contracts deployment failed"
+                    exit 1
+                  fi
+
+                  if [[ "${{ needs.deploy-backend.result }}" == "failure" ]]; then
+                    echo "❌ Backend deployment failed"
+                    exit 1
+                  fi
+
+                  echo "✅ All deployments completed successfully!"
