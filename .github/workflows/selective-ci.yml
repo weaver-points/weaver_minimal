@@ -1,0 +1,160 @@
+name: Selective CI/CD
+
+on:
+    push:
+        branches: [main, develop]
+    pull_request:
+        branches: [main, develop]
+
+jobs:
+    # Check which paths have changed
+    changes:
+        runs-on: ubuntu-latest
+        outputs:
+            client: ${{ steps.filter.outputs.client }}
+            contracts: ${{ steps.filter.outputs.contracts }}
+            backend: ${{ steps.filter.outputs.backend }}
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0 # Fetch all history for accurate change detection
+
+            - name: Check for changes
+              id: filter
+              uses: dorny/paths-filter@v3
+              with:
+                  filters: |
+                      client:
+                        - 'client/**'
+                      contracts:
+                        - 'contracts/**'
+                      backend:
+                        - 'backend/**'
+
+    # Client (Frontend) CI
+    client-ci:
+        needs: changes
+        if: needs.changes.outputs.client == 'true'
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "20"
+                  cache: "npm"
+                  cache-dependency-path: client/package-lock.json
+
+            - name: Install dependencies
+              run: |
+                  cd client
+                  npm ci
+
+            - name: Run linting
+              run: |
+                  cd client
+                  npm run lint
+
+            - name: Build project
+              run: |
+                  cd client
+                  npm run build
+
+            - name: Run tests (if available)
+              run: |
+                  cd client
+                  npm test --if-present
+              continue-on-error: true
+
+    # Contracts (Cairo) CI
+    contracts-ci:
+        needs: changes
+        if: needs.changes.outputs.contracts == 'true'
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Setup Cairo
+              uses: starknet-edu/setup-cairo@v1
+              with:
+                  cairo-version: "2.8.5"
+                  scarb-version: "0.12.0"
+                  starknet-foundry-version: "0.34.0"
+
+            - name: Build contracts
+              run: |
+                  cd contracts
+                  scarb build
+
+            - name: Run contract tests
+              run: |
+                  cd contracts
+                  scarb test
+
+            - name: Run Foundry tests
+              run: |
+                  cd contracts
+                  snforge test
+
+    # Backend CI (placeholder for future backend processes)
+    backend-ci:
+        needs: changes
+        if: needs.changes.outputs.backend == 'true'
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Backend placeholder
+              run: |
+                  echo "Backend CI/CD processes will be added here when backend code is implemented"
+                  echo "Currently only documentation exists in the backend folder"
+
+            # Add your backend-specific processes here when implemented
+            # Examples:
+            # - name: Setup Python/Node.js/Go
+            # - name: Install dependencies
+            # - name: Run tests
+            # - name: Build backend
+            # - name: Deploy to staging/production
+
+    # Optional: Combined status check
+    status-check:
+        needs: [changes, client-ci, contracts-ci, backend-ci]
+        runs-on: ubuntu-latest
+        if: always()
+
+        steps:
+            - name: Check job status
+              run: |
+                  echo "Changes detected:"
+                  echo "  Client: ${{ needs.changes.outputs.client }}"
+                  echo "  Contracts: ${{ needs.changes.outputs.contracts }}"
+                  echo "  Backend: ${{ needs.changes.outputs.backend }}"
+
+                  echo "Job results:"
+                  echo "  Client CI: ${{ needs.client-ci.result }}"
+                  echo "  Contracts CI: ${{ needs.contracts-ci.result }}"
+                  echo "  Backend CI: ${{ needs.backend-ci.result }}"
+
+                  # Fail if any required job failed
+                  if [[ "${{ needs.client-ci.result }}" == "failure" && "${{ needs.changes.outputs.client }}" == "true" ]]; then
+                    echo "Client CI failed"
+                    exit 1
+                  fi
+
+                  if [[ "${{ needs.contracts-ci.result }}" == "failure" && "${{ needs.changes.outputs.contracts }}" == "true" ]]; then
+                    echo "Contracts CI failed"
+                    exit 1
+                  fi
+
+                  if [[ "${{ needs.backend-ci.result }}" == "failure" && "${{ needs.changes.outputs.backend }}" == "true" ]]; then
+                    echo "Backend CI failed"
+                    exit 1
+                  fi
