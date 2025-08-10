@@ -77,19 +77,19 @@ jobs:
                   cd client
                   npm run build
 
-            - name: Deploy to Vercel/Netlify (example)
-              run: |
-                  echo "Deploying client to production..."
-                  # Add your deployment commands here
-                  # Examples:
-                  # - For Vercel: vercel --prod
-                  # - For Netlify: netlify deploy --prod
-                  # - For AWS S3: aws s3 sync dist/ s3://your-bucket
-                  echo "Client deployment completed"
+            # - name: Deploy to Vercel/Netlify (example)
+            #   run: |
+            #       echo "Deploying client to production..."
+            #       # Add your deployment commands here
+            #       # Examples:
+            #       # - For Vercel: vercel --prod
+            #       # - For Netlify: netlify deploy --prod
+            #       # - For AWS S3: aws s3 sync dist/ s3://your-bucket
+            #       echo "Client deployment completed"
 
-            - name: Notify deployment
-              run: |
-                  echo "✅ Client successfully deployed to production"
+            # - name: Notify deployment
+            #   run: |
+            #       echo "✅ Client successfully deployed to production"
 
     # Deploy Contracts
     deploy-contracts:
@@ -116,22 +116,22 @@ jobs:
                   cd contracts
                   scarb build
 
-            - name: Deploy to Starknet
-              env:
-                  STARKNET_PRIVATE_KEY: ${{ secrets.STARKNET_PRIVATE_KEY }}
-                  STARKNET_RPC_URL: ${{ secrets.STARKNET_RPC_URL }}
-              run: |
-                  cd contracts
-                  echo "Deploying contracts to Starknet..."
-                  # Add your deployment commands here
-                  # Examples:
-                  # - scarb deploy
-                  # - starknet deploy
-                  echo "Contract deployment completed"
+            # - name: Deploy to Starknet
+            #   env:
+            #       STARKNET_PRIVATE_KEY: ${{ secrets.STARKNET_PRIVATE_KEY }}
+            #       STARKNET_RPC_URL: ${{ secrets.STARKNET_RPC_URL }}
+            #   run: |
+            #       cd contracts
+            #       echo "Deploying contracts to Starknet..."
+            #       # Add your deployment commands here
+            #       # Examples:
+            #       # - scarb deploy
+            #       # - starknet deploy
+            #       echo "Contract deployment completed"
 
-            - name: Notify deployment
-              run: |
-                  echo "✅ Contracts successfully deployed to Starknet"
+            # - name: Notify deployment
+            #   run: |
+            #       echo "✅ Contracts successfully deployed to Starknet"
 
     # Deploy Backend
     deploy-backend:
