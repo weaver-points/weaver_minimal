@@ -69,6 +69,14 @@ For contract deployment, set these secrets in your repository:
 -   `STARKNET_PRIVATE_KEY` - Your Starknet private key
 -   `STARKNET_RPC_URL` - Starknet RPC endpoint
 
+### Current Versions
+
+The CI/CD system uses these versions:
+- **Cairo**: 2.12.0
+- **Scarb**: 0.12.0
+- **Starknet Foundry**: 0.48.0
+- **snforge_std**: 0.48.0
+
 ### Customization
 
 To add new folders or modify processes:
