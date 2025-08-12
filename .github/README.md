@@ -1,135 +1,49 @@
-# Selective CI/CD System
+# Weaver
 
-This repository uses a selective CI/CD system that only runs processes for folders that have actually changed, optimizing build times and resource usage.
+Weaver is a streamlined platform that facilitates connections between users and applications built on the Starknet blockchain ecosystem, creating a more efficient interaction experience.
 
-## How It Works
+---
 
-The system uses GitHub Actions with path filtering to determine which components have changed and only runs the relevant CI/CD processes.
+## What We Solve with Weaver
 
-### Workflows
+We're building a specialized user engagement solution tailored exclusively for Starknet projects and users. Our product helps Starknet-based applications:
 
-1. **`selective-ci.yml`** - Runs on push/PR to `main` and `develop` branches
-2. **`deploy.yml`** - Runs on push to `main` branch and manual triggers
+-   Optimize user engagement
+-   Improve retention metrics
+-   Boost revenue streams
 
-### Path Detection
+By harnessing data-driven campaign insights about user growth patterns, the platform enables Starknet projects to maintain and expand their user communities while enhancing their monetization strategies.
 
-The system monitors these folders:
+Weaver pioneers an innovative user growth ecosystem tailored specifically for Starknet, tackling fundamental challenges in **engagement, retention, and security**. Our solution differentiates itself through several groundbreaking approaches:
 
--   `client/` - React/TypeScript frontend
--   `contracts/` - Cairo smart contracts
--   `backend/` - Backend services (placeholder)
+---
 
-## Scenarios
+## Unified Ecosystem Growth Framework
 
-### Scenario 1: Only Client Changes
+We're creating the first holistic user growth and campaign infrastructure native to Starknet, establishing a standardized methodology for measuring user metrics and rewarding engagement across the entire ecosystem.
 
-If you only modify files in `client/`:
+Unlike fragmented loyalty programs, our growth campaigns deliver value throughout all participating Starknet projects.
 
--   ✅ Client CI runs (lint, build, test)
--   ❌ Contracts CI skips
--   ❌ Backend CI skips
--   ✅ Only client deployment runs
+---
 
-### Scenario 2: Only Contract Changes
+## Cross-Platform Network Effects
 
-If you only modify files in `contracts/`:
+Weaver's distinctive advantage comes from generating **network effects** across the Starknet ecosystem.
 
--   ❌ Client CI skips
--   ✅ Contracts CI runs (build, test)
--   ❌ Backend CI skips
--   ✅ Only contract deployment runs
+As project adoption increases, the value of user participation grows — encouraging deeper engagement with multiple Starknet applications and creating a self-reinforcing cycle of adoption.
 
-### Scenario 3: Multiple Changes
+---
 
-If you modify both `client/` and `contracts/`:
+## Revolutionary Engagement Strategies
 
--   ✅ Client CI runs
--   ✅ Contracts CI runs
--   ❌ Backend CI skips
--   ✅ Both client and contract deployments run
+We're introducing fresh approaches to user retention through:
 
-## Manual Deployment
+-   **Campaign-driven reputation systems** that motivate users to discover and interact with diverse Starknet projects
+-   **Transparent on-chain passport framework** enabling users to showcase their contributions to specific products
 
-You can manually trigger deployments using the GitHub Actions UI:
+---
 
-1. Go to **Actions** tab
-2. Select **Selective Deployment** workflow
-3. Click **Run workflow**
-4. Choose which components to deploy:
-    - ☑️ Deploy client (frontend)
-    - ☑️ Deploy contracts
-    - ☑️ Deploy backend
+## Strategic Advantages
 
-## Configuration
-
-### Environment Variables
-
-For contract deployment, set these secrets in your repository:
-
--   `STARKNET_PRIVATE_KEY` - Your Starknet private key
--   `STARKNET_RPC_URL` - Starknet RPC endpoint
-
-### Current Versions
-
-The CI/CD system uses these versions:
-- **Cairo**: 2.12.0
-- **Scarb**: 0.12.0
-- **Starknet Foundry**: 0.48.0
-- **snforge_std**: 0.48.0
-
-### Customization
-
-To add new folders or modify processes:
-
-1. **Add new folder monitoring**:
-
-    ```yaml
-    filters: |
-        new-folder:
-          - 'new-folder/**'
-    ```
-
-2. **Add new CI job**:
-
-    ```yaml
-    new-folder-ci:
-        needs: changes
-        if: needs.changes.outputs.new-folder == 'true'
-        # ... your CI steps
-    ```
-
-3. **Add new deployment job**:
-    ```yaml
-    deploy-new-folder:
-        needs: [changes]
-        if: needs.changes.outputs.new-folder == 'true'
-        # ... your deployment steps
-    ```
-
-## Benefits
-
--   **Faster CI/CD**: Only runs necessary processes
--   **Cost effective**: Reduces GitHub Actions minutes usage
--   **Focused feedback**: Only relevant tests run for your changes
--   **Parallel execution**: Different components can run simultaneously
--   **Manual control**: Can manually trigger specific deployments
-
-## Troubleshooting
-
-### Job Skipped Unexpectedly
-
--   Check if your changes are in the monitored paths
--   Verify the path filters in the workflow files
--   Ensure you're pushing to the correct branches
-
-### Deployment Fails
-
--   Check environment variables are set correctly
--   Verify deployment credentials have proper permissions
--   Review deployment logs for specific error messages
-
-### Adding New Components
-
-1. Update path filters in both workflows
-2. Add corresponding CI and deployment jobs
-3. Test with a small change to verify the system works
+-   **Pioneer status** in developing a Starknet-native growth campaign platform
+-   **Community-driven open-source architecture** facilitating rapid innovation
