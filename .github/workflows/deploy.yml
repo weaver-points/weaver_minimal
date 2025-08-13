@@ -107,9 +107,9 @@ jobs:
             - name: Setup Cairo
               uses: starknet-edu/setup-cairo@v1
               with:
-                  cairo-version: "2.8.5"
+                  cairo-version: "2.12.0"
                   scarb-version: "0.12.0"
-                  starknet-foundry-version: "0.34.0"
+                  starknet-foundry-version: "0.48.0"
 
             - name: Build contracts
               run: |
