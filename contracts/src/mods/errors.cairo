@@ -18,4 +18,13 @@ pub mod Errors {
     pub const TASK_NOT_YET_COMPLETED: felt252 = 'TASK_NOT_YET_COMPLETED';
     pub const INVALID_PROTOCOL_ID: felt252 = 'INVALID_PROTOCOL_ID';
     pub const NOT_IN_PROTOCOL_CAMPAIGN: felt252 = 'NOT_IN_PROTOCOL_CAMPAIGN';
+    pub const UNAUTHORIZED: felt252 = 'Unauthorized access';
+    pub const ZERO_ADDRESS: felt252 = 'Address cannot be zero';
+    pub const INSUFFICIENT_BALANCE: felt252 = 'Insufficient STRK balance';
+    pub const INSUFFICIENT_ALLOWANCE: felt252 = 'Insufficient STRK allowance';
+    pub const TRANSFER_FAILED: felt252 = 'STRK transfer failed';
+    pub const PRICE_FETCH_FAILED: felt252 = 'Failed to fetch STRK price';
+    pub const MINTING_FAILED: felt252 = 'NFT minting failed';
+    pub const WITHDRAWAL_FAILED: felt252 = 'Withdrawal failed';
+    pub const INVALID_PRICE: felt252 = 'Invalid price from oracle';
 }
