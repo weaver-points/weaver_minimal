@@ -1,17 +1,18 @@
-pub mod types;
-pub mod events;
 pub mod errors;
+pub mod events;
+pub mod types;
 
 pub mod token {
     pub mod WeaverNFT;
 }
 
 pub mod interfaces {
+    pub mod ICustomNFT;
+    pub mod IERC721;
     pub mod IWeaver;
     pub mod IWeaverNFT;
-    pub mod ICustomNFT;
+    pub mod IWeaverScoreCardNFTMinter;
     pub mod Iprotocol;
-    pub mod IERC721;
 }
 
 pub mod weaver_contract {
@@ -19,8 +20,8 @@ pub mod weaver_contract {
 }
 
 pub mod protocol {
-    pub mod protocolcomponent;
     pub mod protocolNFT;
+    pub mod protocolcomponent;
     pub mod protocols;
 }
 
